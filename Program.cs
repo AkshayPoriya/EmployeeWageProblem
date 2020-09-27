@@ -15,12 +15,17 @@ namespace EmployeeWageProblem
             if (isPresent == 1)
             {
                 dailyEmployeeWage = DailyEmployeeWage();
-                partTimeWage = PartTimeWage();
+                int doPartTime = Attendance(); 
+                if(doPartTime==1)
+                    partTimeWage = PartTimeWage();
             }
             Console.WriteLine("Daily Employee Wage : {0}", dailyEmployeeWage);
             Console.WriteLine("Part Time Employee Wage : {0}", partTimeWage);
         }
-
+        /// <summary>
+        /// Attendance function returns 0 or 1 randomly.
+        /// </summary>
+        /// <returns></returns>
         static int Attendance()
         {
             Random randObj = new Random();
