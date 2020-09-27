@@ -11,12 +11,14 @@ namespace EmployeeWageProblem
                 Console.WriteLine("Employee is Absent!");
             else
                 Console.WriteLine("Employee is Present!");
-            int dailyEmployeeWage = 0;
+            int dailyEmployeeWage = 0, partTimeWage = 0;
             if (isPresent == 1)
             {
                 dailyEmployeeWage = DailyEmployeeWage();
+                partTimeWage = PartTimeWage();
             }
             Console.WriteLine("Daily Employee Wage : {0}", dailyEmployeeWage);
+            Console.WriteLine("Part Time Employee Wage : {0}", partTimeWage);
         }
 
         static int Attendance()
@@ -30,6 +32,13 @@ namespace EmployeeWageProblem
             int fullDayHour = 8;
             int perHourWage = 20;
             return fullDayHour * perHourWage;
+        }
+
+        static int PartTimeWage()
+        {
+            int partTimeHour = 4;
+            int perHourWage = 20;
+            return partTimeHour * perHourWage;
         }
     }
 }
