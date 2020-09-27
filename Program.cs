@@ -16,7 +16,9 @@ namespace EmployeeWageProblem
                 case 1:
                     Console.WriteLine("Employee is Present!");
                     dailyEmployeeWage = DailyEmployeeWage();
-                    partTimeWage = PartTimeWage();
+                    int doPartTime = Attendance();
+                    if(doPartTime==1)
+                        partTimeWage = PartTimeWage();
                     Console.WriteLine("Daily Employee Wage is : {0}", dailyEmployeeWage);
                     Console.WriteLine("Part Time Employee Wage is : {0}", partTimeWage);
                     break;
