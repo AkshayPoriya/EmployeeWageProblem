@@ -4,75 +4,48 @@ namespace EmployeeWageProblem
 {
     class Program
     {
+        const int IS_ABSENT = 0;
+        const int IS_PART_TIME = 1;
+        const int IS_FULL_TIME = 2;
+        const int EMP_RATE_PER_HOUR = 20;
+        const int NUM_OF_WORKING_DAYS = 20;
+        const int MAX_WORKING_HOURS = 100;
+
         static void Main(string[] args)
         {
-            int totalDailyWage = 0, totalPartTimeWage = 0;
-            int workingDaysInMonth = 20;
-            int totalWorkingHours = 0;
-            bool flag = false;
-            for(int i = 1; i <= workingDaysInMonth; i++)
+            CalculateEmpWage();
+        }
+        static void CalculateEmpWage()
+        {
+            Random randObj = new Random();
+            int empHours = 0, totalWorkingHoursCumulative = 0;
+            
+            for(int currentDay = 1; currentDay <= NUM_OF_WORKING_DAYS; currentDay++)
             {
-                int isPresent = Attendance();
-                int dailyEmployeeWage = 0, partTimeWage = 0;
-                switch (isPresent)
+                int option = randObj.Next(0, 3);
+                switch (option)
                 {
-                    case 0:
+                    case IS_ABSENT:
+                        empHours = 0;
                         break;
-                    case 1:
-                        totalWorkingHours += 8;
-                        if (totalWorkingHours > 100)
-                        {
-                            flag = true;
-                            break;
-                        }
-                        dailyEmployeeWage = DailyEmployeeWage();
-                        int doPartTime = Attendance();
-                        if (doPartTime == 1)
-                        {
-                            totalWorkingHours += 4;
-                            if (totalWorkingHours > 100)
-                            {
-                                flag = true;
-                                break;
-                            }
-                            partTimeWage = PartTimeWage();
-                        }
-                            
+                    case IS_PART_TIME:
+                        empHours = 4;
+                        break;
+                    case IS_FULL_TIME:
+                        empHours = 8;
                         break;
                     default:
                         break;
                 }
-                if (flag)
-                    break;
-                totalDailyWage += dailyEmployeeWage;
-                totalPartTimeWage += partTimeWage;
+                if(totalWorkingHoursCumulative+empHours > MAX_WORKING_HOURS)
+                    empHours = 0;
+                totalWorkingHoursCumulative += empHours;
+                Console.WriteLine("Day " + (currentDay) + " Employee Hours "+empHours);
             }
-            Console.WriteLine("Total Daily Employee Wage : {0}", totalDailyWage);
-            Console.WriteLine("Total Part Time Employee Wage : {0}", totalPartTimeWage);
-            Console.WriteLine("Total Wage : {0}",totalDailyWage + totalPartTimeWage);
+            Console.WriteLine("Total Employee Hours "+totalWorkingHoursCumulative);
+            int totalEmpWage = totalWorkingHoursCumulative * EMP_RATE_PER_HOUR;
+            Console.WriteLine("Total Employee Wage: "+totalEmpWage);
         }
-        /// <summary>
-        /// Attendance function returns 0 or 1 randomly.
-        /// </summary>
-        /// <returns></returns>
-        static int Attendance()
-        {
-            Random randObj = new Random();
-            return randObj.Next(0, 2);
-        }
-
-        static int DailyEmployeeWage()
-        {
-            int fullDayHour = 8;
-            int perHourWage = 20;
-            return fullDayHour * perHourWage;
-        }
-
-        static int PartTimeWage()
-        {
-            int partTimeHour = 4;
-            int perHourWage = 20;
-            return partTimeHour * perHourWage;
-        }
+        
     }
 }
