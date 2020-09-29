@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EmployeeWageProblem
 {
-    class EmpWageBuilderObject
+    class EmpWageBuilderObject : IEmpWageBuilderObject
     {
 
         private const int MAX_NO_OF_COMPANIES = 10;
