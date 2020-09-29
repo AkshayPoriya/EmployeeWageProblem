@@ -6,31 +6,44 @@ namespace EmployeeWageProblem
 {
     class EmpWageBuilderObject
     {
-        private string company;
-        private int empRatePerHour, numOfWorkingDays, maxWorkingHours;
-        private int totalEmpWage;
 
-        public EmpWageBuilderObject(string company, int empRatePerHour, int numOfWorkingDays, int maxWorkingHours)
+        private const int MAX_NO_OF_COMPANIES = 10;
+        private CompanyWageDetails[] CompanyWageDetailsArray;
+        private int currentCompanyIndex = 0;
+        
+        public EmpWageBuilderObject()
         {
-            this.company = company;
-            this.empRatePerHour = empRatePerHour;
-            this.numOfWorkingDays = numOfWorkingDays;
-            this.maxWorkingHours = maxWorkingHours;
-            this.totalEmpWage = 0;
+            CompanyWageDetailsArray = new CompanyWageDetails[MAX_NO_OF_COMPANIES];
         }
-        const int IS_ABSENT = 0;
-        const int IS_PART_TIME = 1;
-        const int IS_FULL_TIME = 2;
-
-        public void CalculateEmpWage()
+        
+        public void AddCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxWorkingHours)
         {
+            CompanyWageDetailsArray[currentCompanyIndex] = new CompanyWageDetails(company, empRatePerHour, numOfWorkingDays, maxWorkingHours);
+            currentCompanyIndex++;
+        }
+
+        public void ComputeEmpWage()
+        {
+            for(int i = 0; i < currentCompanyIndex; i++)
+            {
+                CompanyWageDetailsArray[i].totalEmpWage = CalculateTotalEmployeeWage(CompanyWageDetailsArray[i]);
+                CompanyWageDetailsArray[i].GetDetails();
+            }
+        }
+
+        private int CalculateTotalEmployeeWage(CompanyWageDetails cwdObj)
+        {
+            const int IS_ABSENT = 0;
+            const int IS_PART_TIME = 1;
+            const int IS_FULL_TIME = 2;
+            
             Console.WriteLine("*****************************************************");
-            Console.WriteLine("Wage Calculation for Employee of " + this.company);
+            Console.WriteLine("Wage Calculation for Employee of " + cwdObj.company);
             Console.WriteLine("*****************************************************");
             Random randObj = new Random();
             int empHours = 0, totalWorkingHoursCumulative = 0;
 
-            for (int currentDay = 1; currentDay <= numOfWorkingDays && totalWorkingHoursCumulative <= maxWorkingHours; currentDay++)
+            for (int currentDay = 1; currentDay <= cwdObj.numOfWorkingDays && totalWorkingHoursCumulative <= cwdObj.maxWorkingHours; currentDay++)
             {
                 int option = randObj.Next(0, 3);
                 switch (option)
@@ -47,21 +60,14 @@ namespace EmployeeWageProblem
                     default:
                         break;
                 }
-                if (totalWorkingHoursCumulative + empHours > maxWorkingHours)
+                if (totalWorkingHoursCumulative + empHours > cwdObj.maxWorkingHours)
                     empHours = 0;
                 totalWorkingHoursCumulative += empHours;
                 Console.WriteLine("Day " + (currentDay) + " Employee Hours " + empHours);
             }
             Console.WriteLine("Total Employee Hours " + totalWorkingHoursCumulative);
-            totalEmpWage = totalWorkingHoursCumulative * empRatePerHour;
-            Console.WriteLine("Total Employee Wage " + totalEmpWage + "\n\n");
+            return totalWorkingHoursCumulative * cwdObj.empRatePerHour;
         }
 
-        public void GetDetails()
-        {
-            Console.WriteLine("*****************************************************");
-            Console.WriteLine("Total Employee Wage for "+company+" Employee is: " + totalEmpWage);
-            Console.WriteLine("***************************************************** \n");
-        }
     }
 }
