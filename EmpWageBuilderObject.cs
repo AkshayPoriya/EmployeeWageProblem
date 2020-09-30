@@ -7,27 +7,35 @@ namespace EmployeeWageProblem
     class EmpWageBuilderObject : IEmpWageBuilderObject
     {
 
-        private List<CompanyWageDetails> CompanyWageDetailsList;
+        private List<CompanyWageDetails> companyWageDetailsList;
+        private Dictionary<string, CompanyWageDetails> companyNameToWageMap;
         
         public EmpWageBuilderObject()
         {
-            CompanyWageDetailsList = new List<CompanyWageDetails>();
+            this.companyWageDetailsList = new List<CompanyWageDetails>();
+            this.companyNameToWageMap = new Dictionary<string, CompanyWageDetails>();
         }
         
         public void AddCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxWorkingHours)
         {
             CompanyWageDetails cwdObj = new CompanyWageDetails(company, empRatePerHour, numOfWorkingDays, maxWorkingHours);
-            CompanyWageDetailsList.Add(cwdObj);
+            companyWageDetailsList.Add(cwdObj);
+            companyNameToWageMap.Add(company, cwdObj);
         }
 
         public void ComputeEmpWage()
         {
-            foreach(CompanyWageDetails cwdObj in CompanyWageDetailsList)
+            foreach(CompanyWageDetails cwdObj in companyWageDetailsList)
             {
                 cwdObj.totalEmpWage = CalculateTotalEmployeeWage(cwdObj);
                 cwdObj.GetDailyWageDetails();
                 cwdObj.GetTotalWageDetails();
             }
+        }
+
+        public int GetTotalWage(string company)
+        {
+            return companyNameToWageMap[company].totalEmpWage;
         }
 
         private int CalculateTotalEmployeeWage(CompanyWageDetails cwdObj)
