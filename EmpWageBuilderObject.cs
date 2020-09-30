@@ -36,7 +36,7 @@ namespace EmployeeWageProblem
             const int IS_FULL_TIME = 2;
             
             Console.WriteLine("*****************************************************");
-            Console.WriteLine("Wage Calculation for Employee of " + cwdObj.company);
+            Console.WriteLine("Wage Calculation for " + cwdObj.company + " Employee");
             Console.WriteLine("*****************************************************");
             Random randObj = new Random();
             int empHours = 0, totalWorkingHoursCumulative = 0;

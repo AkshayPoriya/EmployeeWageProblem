@@ -22,7 +22,7 @@ namespace EmployeeWageProblem
         public void GetDetails()
         {
             Console.WriteLine("*****************************************************");
-            Console.WriteLine("Total Employee Wage for " + company + " Employee is: " + totalEmpWage);
+            Console.WriteLine("Total Wage for " + company + " Employee is: " + totalEmpWage);
             Console.WriteLine("***************************************************** \n");
         }
     }
