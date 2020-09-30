@@ -7,27 +7,25 @@ namespace EmployeeWageProblem
     class EmpWageBuilderObject : IEmpWageBuilderObject
     {
 
-        private const int MAX_NO_OF_COMPANIES = 10;
-        private CompanyWageDetails[] CompanyWageDetailsArray;
-        private int currentCompanyIndex = 0;
+        private List<CompanyWageDetails> CompanyWageDetailsList;
         
         public EmpWageBuilderObject()
         {
-            CompanyWageDetailsArray = new CompanyWageDetails[MAX_NO_OF_COMPANIES];
+            CompanyWageDetailsList = new List<CompanyWageDetails>();
         }
         
         public void AddCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxWorkingHours)
         {
-            CompanyWageDetailsArray[currentCompanyIndex] = new CompanyWageDetails(company, empRatePerHour, numOfWorkingDays, maxWorkingHours);
-            currentCompanyIndex++;
+            CompanyWageDetails cwdObj = new CompanyWageDetails(company, empRatePerHour, numOfWorkingDays, maxWorkingHours);
+            CompanyWageDetailsList.Add(cwdObj);
         }
 
         public void ComputeEmpWage()
         {
-            for(int i = 0; i < currentCompanyIndex; i++)
+            foreach(CompanyWageDetails cwdObj in CompanyWageDetailsList)
             {
-                CompanyWageDetailsArray[i].totalEmpWage = CalculateTotalEmployeeWage(CompanyWageDetailsArray[i]);
-                CompanyWageDetailsArray[i].GetDetails();
+                cwdObj.totalEmpWage = CalculateTotalEmployeeWage(cwdObj);
+                cwdObj.GetDetails();
             }
         }
 
