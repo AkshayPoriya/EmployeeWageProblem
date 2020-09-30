@@ -25,7 +25,8 @@ namespace EmployeeWageProblem
             foreach(CompanyWageDetails cwdObj in CompanyWageDetailsList)
             {
                 cwdObj.totalEmpWage = CalculateTotalEmployeeWage(cwdObj);
-                cwdObj.GetDetails();
+                cwdObj.GetDailyWageDetails();
+                cwdObj.GetTotalWageDetails();
             }
         }
 
@@ -61,7 +62,7 @@ namespace EmployeeWageProblem
                 if (totalWorkingHoursCumulative + empHours > cwdObj.maxWorkingHours)
                     empHours = 0;
                 totalWorkingHoursCumulative += empHours;
-                Console.WriteLine("Day " + (currentDay) + " Employee Hours " + empHours);
+                cwdObj.dailyWageList.Add(empHours);
             }
             Console.WriteLine("Total Employee Hours " + totalWorkingHoursCumulative);
             return totalWorkingHoursCumulative * cwdObj.empRatePerHour;
